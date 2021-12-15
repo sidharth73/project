@@ -1,0 +1,67 @@
+<div class="container py-3">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>People Management</h2>
+        </div>
+        <div class="col ml-auto text-right">
+            <button type="button" class="btn btn-outline-success" (click)="onAddPeople()">Add People</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let item of peoples">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.age}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.gender}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.mobile}}</h6>
+                    <hr>
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-2" (click)="onEditPeople(item)">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" (click) ="onDeletePeople(item._id)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade show" [class.show]="showModal">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{editMode? 'Update' :'Add'}} People</h5>
+                <button (click)="onCloseModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="pepForm" (ngSubmit)="onPepSubmit()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Enter Name</label>
+                        <input type="text" class="form-control" formControlName="name">
+                        <small *ngIf="!pepForm.get('name').valid && pepForm.get('name').touched" class="form-text text-danger">Please Enter Name.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Age</label>
+                        <input type="text" class="form-control" formControlName="age">
+                        <small *ngIf="!pepForm.get('age').valid && pepForm.get('age').touched"class="form-text text-danger">Please Enter Age.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Gender</label>
+                        <input type="text" class="form-control" formControlName="gender">
+                        <small *ngIf="!pepForm.get('gender').valid && pepForm.get('gender').touched"class="form-text text-danger">Please Enter Gender.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Phone Number</label>
+                        <input type="text" class="form-control" formControlName="mobile">
+                        <small *ngIf="!pepForm.get('mobile').valid && pepForm.get('mobile').touched"class="form-text text-danger">Please Enter Phone No.</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="onCloseModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">{{editMode? 'Update People' :'Add People'}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
